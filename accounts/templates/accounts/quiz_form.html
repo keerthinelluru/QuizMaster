@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{% if form_type == 'create' %}Create{% else %}Edit{% endif %} Quiz</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #dfe9f3, #ffffff);
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .form-container {
+      background: white;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      max-width: 500px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #2c3e50;
+    }
+
+    label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 6px;
+      color: #34495e;
+    }
+
+    input[type="text"],
+    select {
+      width: 100%;
+      padding: 10px 12px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      font-weight: 600;
+      border: none;
+      background-color: #00b894;
+      color: white;
+      border-radius: 10px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #019875;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <h2>{% if form_type == 'create' %}Create{% else %}Edit{% endif %} Quiz</h2>
+
+    <form method="POST">
+      {% csrf_token %}
+      <label for="title">Quiz Title:</label>
+      <input type="text" name="title" required>
+
+      <label for="subject">Select Subject:</label>
+      <select name="subject" required>
+        <option value="" disabled selected>-- Choose Subject --</option>
+        {% for subject in subjects %}
+          <option value="{{ subject.id }}">{{ subject.name }}</option>
+        {% endfor %}
+      </select>
+
+      <button type="submit">Save Quiz</button>
+    </form>
+  </div>
+
+</body>
+</html>

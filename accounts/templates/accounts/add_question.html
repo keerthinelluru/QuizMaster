@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Add Question to {{ quiz.title }}</title>
+  <style>
+    body {
+      background: #f1f2f6;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 40px;
+    }
+
+    .form-box {
+      background: white;
+      padding: 30px;
+      max-width: 600px;
+      margin: auto;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      text-align: center;
+      color: #2d3436;
+    }
+
+    label {
+      font-weight: 600;
+      margin-top: 10px;
+      display: block;
+    }
+
+    input[type="text"], textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      font-size: 1rem;
+    }
+
+    button {
+      padding: 12px 20px;
+      width: 100%;
+      font-weight: bold;
+      background: #00b894;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #019875;
+    }
+
+    .back {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      text-decoration: none;
+      color: #636e72;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-box">
+    <h2>Add Question to {{ quiz.title }}</h2>
+    {% if messages %}
+    <ul>
+      {% for message in messages %}
+        <li style="color: {% if message.tags == 'error' %}red{% else %}green{% endif %}; font-weight: bold;">
+          {{ message }}
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+    <form method="POST">
+      {% csrf_token %}
+      <label>Question:</label>
+      <textarea name="text" required></textarea>
+
+      <label>Option 1:</label>
+      <input type="text" name="option1" required>
+
+      <label>Option 2:</label>
+      <input type="text" name="option2" required>
+
+      <label>Option 3:</label>
+      <input type="text" name="option3" required>
+
+      <label>Option 4:</label>
+      <input type="text" name="option4" required>
+
+      <label>Correct Answer (must match one of the above exactly):</label>
+      <input type="text" name="correct_answer" required>
+
+      <button type="submit">Save Question</button>
+    </form>
+
+    <a class="back" href="{% url 'quiz_list' %}">← Back to Quizzes</a>
+  </div>
+
+</body>
+</html>

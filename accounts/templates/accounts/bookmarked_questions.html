@@ -1,0 +1,67 @@
+<!DOCTYPE html> 
+<html> 
+    <head>
+         <title>📌 Bookmarked Questions</title>
+ <style>
+  body {
+     background: #f5f6fa; font-family: 'Segoe UI', sans-serif; padding: 50px; }
+ .container {
+  max-width: 800px;
+  margin: auto;
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+}
+
+h2 {
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+.question-box {
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 15px;
+}
+
+.quiz-title {
+  color: #636e72;
+  font-size: 0.95rem;
+}
+
+.question-text {
+  margin: 5px 0;
+  font-weight: bold;
+}
+.back-link { 
+      display: inline-block; 
+      margin-top: 30px; 
+      color: #3498db; 
+      text-decoration: none;
+       font-weight: bold; 
+       font-size: 16px; 
+      } 
+      .back-link:hover { text-decoration: underline; color: #2980b9; }
+</style>
+ </head> 
+ <body> 
+    <div class="container"> 
+        <h2>📌 Bookmarked Questions</h2>
+        {% if bookmarks %}
+  {% for item in bookmarks %}
+    <div class="question-box">
+      <div class="quiz-title">{{ item.question.quiz.title }}</div>
+      <div class="question-text">{{ item.question.text }}</div>
+    </div>
+  {% endfor %}
+{% else %}
+  <p>No bookmarked questions found.</p>
+{% endif %}
+<a href="{% url 'user_dashboard' %}" class="back-link">← Back to  Dashboard</a>
+</div> 
+
+
+</body> 
+</html>
+

@@ -1,0 +1,36 @@
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.home, name='home'),
+    path('signup/', views.signup_view, name='signup'),
+    path('login/', views.login_view, name='login'),
+    path('logout/', views.logout_view, name='logout'),
+    path('user/dashboard/', views.user_dashboard, name='user_dashboard'),
+    path('dashboard/admin/', views.admin_dashboard, name='admin_dashboard'), # ✅ this is critical
+    path('subjects/', views.subject_list, name='subject_list'),
+    path('quizzes/', views.quiz_list, name='quiz_list'),
+    path('questions/', views.question_list, name='question_list'),
+    path('submissions/', views.view_submissions, name='view_submissions'),
+    path('subjects/create/', views.subject_create, name='subject_create'),
+    path('subjects/<int:subject_id>/edit/', views.subject_edit, name='subject_edit'),
+    path('subjects/<int:subject_id>/delete/', views.subject_delete, name='subject_delete'),
+    path('quizzes/create/', views.quiz_create, name='quiz_create'),
+    path('quizzes/', views.quiz_list, name='quiz_list'),
+    path('quizzes/<int:quiz_id>/add-question/', views.add_question, name='add_question'),
+    path('quizzes/<int:quiz_id>/questions/', views.quiz_questions, name='quiz_questions'),
+    path('quizzes/<int:quiz_id>/questions/<int:question_id>/edit/', views.edit_question, name='edit_question'),
+path('quizzes/<int:quiz_id>/questions/<int:question_id>/delete/', views.delete_question, name='delete_question'),
+ path('quiz/<int:quiz_id>/start/', views.start_quiz, name='start_quiz'),   
+path('quiz/question/', views.quiz_question, name='quiz_question'),
+path('quiz/result/', views.quiz_result, name='quiz_result'),
+path('user/history/', views.user_history, name='user_history'),
+path('dashboard/admin/submissions/', views.view_all_submissions, name='view_all_submissions'),
+path('notifications/send/', views.send_notification, name='send_notification'),
+path('performance/', views.user_performance_graph, name='user_performance_graph'),
+path('send-notification/', views.send_notification, name='send_notification'),
+path('user/notifications/', views.user_notifications, name='user_notifications'),
+path('leaderboard/', views.leaderboard_view, name='leaderboard'),
+path('bookmarked/', views.view_bookmarked_questions, name='bookmarked_questions'),
+path('certificate/<int:quiz_id>/', views.generate_certificate, name='generate_certificate'),
+]

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Quiz Result - {{ quiz.title }}</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f6f8;
+      padding: 50px;
+    }
+
+    .result-box {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      text-align: center;
+    }
+
+    h2 {
+      color: #2c3e50;
+      margin-bottom: 20px;
+    }
+
+    .score {
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: #27ae60;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 25px;
+      text-decoration: none;
+      color: white;
+      background: #0984e3;
+      padding: 10px 20px;
+      border-radius: 8px;
+    }
+
+    .btn:hover {
+      background: #0652dd;
+    }
+
+    .cert-btn {
+      display: inline-block;
+      margin-top: 20px;
+      background: #6c5ce7;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 6px;
+      text-decoration: none;
+    }
+
+    .cert-btn:hover {
+      background: #4834d4;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="result-box">
+    <h2>🎉 Quiz Completed!</h2>
+    <p class="score">You scored {{ score }} out of {{ total }}</p>
+
+    <a class="btn" href="{% url 'user_dashboard' %}">Back to Dashboard</a>
+
+   {% if show_certificate %}
+    
+      <a href="{% url 'generate_certificate' quiz.id %}" class="cert-btn">🏅 Download Certificate</a>
+    {% endif %}
+    
+  </div>
+
+</body>
+</html>

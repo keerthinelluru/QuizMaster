@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+ <html> 
+    <head>
+         <title>🏆 Leaderboard</title> 
+  <style> 
+  body { font-family: 'Segoe UI', sans-serif; background: #f5f6fa; padding: 40px; }
+      .leaderboard-box {
+        max-width: 600px;
+        margin: auto;
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 25px;
+        color: #2c3e50;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: left;
+    }
+
+    th {
+        background: #2c3e50;
+        color: white;
+    }
+
+    tr:nth-child(even) {
+        background: #f1f1f1;
+    }
+
+    tr:hover {
+        background: #ecf0f1;
+    }
+    .back-link { 
+      display: inline-block; 
+      margin-top: 30px; 
+      color: #3498db; 
+      text-decoration: none;
+       font-weight: bold; 
+       font-size: 16px; 
+      } 
+      .back-link:hover { text-decoration: underline; color: #2980b9; }
+</style>
+</head>
+ <body> 
+    <div class="leaderboard-box"> 
+        <h2>🏆 Top Performers</h2> 
+        <table> <thead> 
+            <tr> <th>Rank</th>
+                 <th>User</th> 
+                 <th>Total Score</th> 
+                 <th>Total Questions</th> 
+                 <th>Accuracy (%)</th> </tr>
+                 </thead> <tbody> {% for user in users %} <tr>
+                     <td>{{ forloop.counter }}</td>
+                      <td>{{ user.username }}</td>
+                       <td>{{ user.total_score|default:0 }}</td> 
+                       <td>{{ user.total_questions|default:0 }}</td> 
+                       <td> {% if user.total_questions %} {{ user.accuracy|floatformat:2 }} {% else %} N/A {% endif %} </td>
+                     </tr> {% empty %} <tr> <td colspan="5">No users found.</td> 
+                    </tr> {% endfor %} 
+                </tbody> </table>
+                <a href="{% url 'user_dashboard' %}" class="back-link">← Back to  Dashboard</a>
+
+    </div>
+    
+ </body>
+  </html>

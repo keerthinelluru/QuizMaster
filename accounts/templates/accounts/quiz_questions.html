@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questions for {{ quiz.title }}</title>
+     <style> 
+     body {
+      background: #f0f2f5; font-family: 'Segoe UI', sans-serif; padding: 40px; 
+      }
+
+.container {
+  max-width: 700px;
+  margin: auto;
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  margin-bottom: 20px;
+  color: #2c3e50;
+}
+
+.question-box {
+  background: #f9f9f9;
+  padding: 15px 20px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  border-left: 4px solid #00b894;
+}
+
+.options {
+  margin-top: 8px;
+  padding-left: 15px;
+  color: #555;
+}
+
+.correct {
+  color: green;
+  font-weight: bold;
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 20px;
+  text-decoration: none;
+  color: #0984e3;
+}
+</style>
+</head>
+<body>
+    <div class="container"> <h2>Questions for {{ quiz.title }}</h2>
+php-template
+Copy
+Edit
+{% if questions %}
+  {% for question in questions %}
+    <div class="question-box">
+      <strong>{{ forloop.counter }}. {{ question.text }}</strong>
+      <div class="options">
+        <div>Option 1: {{ question.option1 }}</div>
+        <div>Option 2: {{ question.option2 }}</div>
+        <div>Option 3: {{ question.option3 }}</div>
+        <div>Option 4: {{ question.option4 }}</div>
+        <div class="correct">✔ Correct Answer: {{ question.correct_answer }}</div>
+      </div>
+      <div style="margin-top: 10px;">
+    <a href="{% url 'edit_question' quiz.id question.id %}" style="margin-right: 10px; color: #2980b9;">✏️ Edit</a>
+    <a href="{% url 'delete_question' quiz.id question.id %}" style="color: #e74c3c;">🗑️ Delete</a>
+  </div>
+    </div>
+  {% endfor %}
+{% else %}
+  <p>No questions added for this quiz yet.</p>
+{% endif %}
+
+<a class="back-link" href="{% url 'quiz_list' %}">← Back to Quizzes</a>
+</div>
+</body>
+</html>

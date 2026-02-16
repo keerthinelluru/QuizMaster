@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>All User Submissions</title>
+  <style>
+    body {
+      background: #f5f6fa;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 40px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #2d3436;
+      margin-bottom: 30px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #0984e3;
+      color: white;
+    }
+
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 20px;
+      text-decoration: none;
+      color: #0984e3;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>📊 All User Submissions</h2>
+
+  {% if submissions %}
+    <table>
+      <tr>
+        <th>User</th>
+        <th>Quiz</th>
+        <th>Subject</th>
+        <th>Score</th>
+        <th>Date</th>
+      </tr>
+      {% for sub in submissions %}
+        <tr>
+          <td>{{ sub.user.username }}</td>
+          <td>{{ sub.quiz.title }}</td>
+          <td>{{ sub.quiz.subject.name }}</td>
+          <td>{{ sub.score }}/{{ sub.total }}</td>
+          <td>{{ sub.submitted_at|date:"Y-m-d H:i" }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+  {% else %}
+    <p style="text-align: center; color: gray;">No submissions yet.</p>
+  {% endif %}
+
+  <a class="back-link" href="{% url 'admin_dashboard' %}">← Back to Admin Dashboard</a>
+</div>
+
+</body>
+</html>

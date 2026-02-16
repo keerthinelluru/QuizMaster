@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+ <html lang="en"> 
+    <head>
+         <meta charset="UTF-8"> 
+         <title>📢 Notifications</title>
+          <style> 
+       body {
+    margin: 0;
+    padding: 40px;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(to right, #e0eafc, #cfdef3);
+    color: #333;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    animation: fadeIn 0.7s ease-out;
+    position: relative; /* Needed for counter-reset */
+    counter-reset: notification-counter; /* Initialize the counter */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+h2 {
+    font-size: 2.2rem;
+    margin-bottom: 30px;
+    color: #2c3e50;
+    border-bottom: 2px solid #74b9ff;
+    padding-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+}
+
+h2::before {
+    content: "🔔"; /* Bell icon for the heading */
+    font-size: 1.8rem;
+    color: #f39c12; /* A vibrant color for the icon */
+}
+
+.notification-card {
+    background-color: #f8f9fa;
+    border-left: 6px solid #0984e3;
+    border-radius: 10px;
+    padding: 20px 25px;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: flex-start;
+    position: relative;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    counter-increment: notification-counter; /* Increment for each notification */
+}
+
+.notification-card:hover {
+    background-color: #eaf7ff; /* Lighter blue on hover */
+    transform: translateY(-3px); /* Subtle lift effect */
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
+}
+
+.notification-number {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #0984e3;
+    margin-right: 20px;
+    min-width: 40px; /* Ensure consistent spacing */
+    text-align: center;
+    padding-top: 5px; /* Align with title */
+    position: relative;
+}
+
+.notification-number::before {
+    content: counter(notification-counter) ".";
+}
+
+.notification-content {
+    flex-grow: 1;
+}
+
+.notification-title {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #2d3436;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.notification-title::before {
+    content: "💡"; /* Lightbulb icon for titles */
+    margin-right: 8px;
+    font-size: 1.1rem;
+    color: #f1c40f;
+}
+
+.notification-message {
+    margin: 10px 0;
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.6;
+}
+
+.notification-link a {
+    color: #0984e3;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.notification-link a::before {
+    content: "🔗"; /* Link icon */
+}
+
+.notification-link a:hover {
+    color: #0c6edb; /* Darker blue on hover */
+    text-decoration: underline;
+}
+
+.notification-date {
+    font-size: 0.88rem;
+    color: #888;
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.notification-date::before {
+    content: "📅"; /* Date icon */
+}
+
+.no-notes {
+    font-style: italic;
+    color: #888;
+    margin-top: 30px;
+    text-align: center;
+    padding: 20px;
+    border: 1px dashed #ccc;
+    border-radius: 8px;
+    background-color: #fdfdfd;
+}
+.back-link { 
+      display: inline-block; 
+      margin-top: 30px; 
+      color: #3498db; 
+      text-decoration: none;
+       font-weight: bold; 
+       font-size: 16px; 
+      } 
+      .back-link:hover { text-decoration: underline; color: #2980b9; }
+</style> 
+</head> 
+<body> 
+    <div class="container"> <h2>📢 Notifications</h2>
+        
+{% for note in notifications %}
+  <div class="notification-card">
+    <div class="notification-title">{{ note.title }}</div>
+    <div class="notification-message">{{ note.message }}</div>
+    {% if note.link %}
+      <div class="notification-link">
+        🔗 <a href="{{ note.link }}" target="_blank">View Reference</a>
+      </div>
+    {% endif %}
+    <div class="notification-date">📅 {{ note.created_at|date:"Y-m-d H:i" }}</div>
+    
+  </div>
+  <a href="{% url 'user_dashboard' %}" class="back-link">← Back to  Dashboard</a>
+
+{% empty %}
+  <p class="no-notes">No notifications available.</p>
+{% endfor %}
+</div> </body> </html>

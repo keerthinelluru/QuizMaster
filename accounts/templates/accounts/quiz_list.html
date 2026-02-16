@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Manage Quizzes</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f6f9fc;
+      display: flex;
+    }
+
+    .main-content {
+      padding: 40px;
+      width: 100%;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #2c3e50;
+    }
+
+    .add-btn {
+      display: inline-block;
+      background: #00b894;
+      color: white;
+      padding: 10px 20px;
+      font-weight: 600;
+      border-radius: 8px;
+      text-decoration: none;
+      margin-bottom: 25px;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .add-btn:hover {
+      background: #019875;
+      transform: translateY(-2px);
+    }
+
+    .subject-section {
+      margin-bottom: 30px;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    }
+
+    .subject-title {
+      font-size: 1.3rem;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #34495e;
+    }
+
+    ul.quiz-list {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .quiz-item {
+      padding: 10px 15px;
+      background-color: #ecf0f1;
+      margin-bottom: 8px;
+      border-radius: 8px;
+      transition: 0.3s ease;
+    }
+
+    .quiz-item:hover {
+      background-color: #dfe6e9;
+    }
+
+    .no-quizzes {
+      font-style: italic;
+      color: #7f8c8d;
+    }
+    .quiz-item a {
+  transition: color 0.3s ease;
+}
+
+.quiz-item a:hover {
+  color: #6c5ce7;
+  text-decoration: underline;
+}
+ .back-link { display: inline-block; margin-top: 30px; color: #3498db; text-decoration: none; font-weight: bold; font-size: 16px; } .back-link:hover { text-decoration: underline; color: #2980b9; }
+
+  </style>
+</head>
+<body>
+
+  <div class="main-content">
+    <h2>📝 Manage Quizzes</h2>
+    
+
+    <a href="{% url 'quiz_create' %}" class="add-btn">➕ Create New Quiz</a>
+<br><a href="{% url 'admin_dashboard' %}" class="back-link">← Back to Admin Dashboard</a><br><br>
+
+    {% for subject in subjects %}
+      <div class="subject-section">
+        <div class="subject-title">{{ subject.name }}</div>
+        {% if subject.quiz_set.all %}
+          <ul class="quiz-list">
+            {% for quiz in subject.quiz_set.all %}
+              <li class="quiz-item">
+  {{ quiz.title }}
+  <a href="{% url 'add_question' quiz.id %}" style="margin-left: 15px; font-size: 0.9rem; text-decoration: none; color: #0984e3;">➕ Add Questions</a>
+<a href="{% url 'quiz_questions' quiz.id %}" style="margin-left: 10px; color: #0984e3;">🔍 View Questions</a> 
+
+</li>
+
+
+            {% endfor %}
+          </ul>
+        {% else %}
+          <div class="no-quizzes">No quizzes created for this subject yet.
+            
+          </div>
+          
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+
+</body>
+</html>

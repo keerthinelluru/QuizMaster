@@ -1,0 +1,144 @@
+{% load static %}
+
+<!DOCTYPE html>
+ <html lang="en"> 
+  <head> 
+    <meta charset="UTF-8"> 
+    <title>User Dashboard</title>
+     <link href="https://fonts.googleapis.com/css2?family=Segoe+UI&display=swap" rel="stylesheet"> 
+     <style>
+      body {
+         margin: 0; 
+         font-family: 'Segoe UI', sans-serif; 
+         background: #f5f6fa; display: flex; } 
+         .sidebar { 
+          width: 220px; 
+          background: #2c3e50; 
+          height: 100vh;
+           color: white; 
+          display: flex;
+           flex-direction: column;
+            padding: 20px; 
+            position: fixed; }
+     .sidebar h2 { 
+      font-size: 1.3rem; 
+      margin-bottom: 20px; 
+      color: #ecf0f1; } 
+     .nav-link { color: #bdc3c7; 
+      text-decoration: none;
+       margin: 10px 0; display: block; 
+       padding: 10px; border-radius: 6px; 
+       transition: background 0.3s; }
+      .nav-link:hover { 
+        background: #34495e; 
+        color: white; } 
+      .main { 
+        margin-left: 240px;
+         padding: 40px; width: 100%; } 
+      h1 {
+         margin-bottom: 25px; 
+         color: #2c3e50; } 
+      .profile-card { 
+        background: #dfe6e9; 
+        padding: 20px; 
+        border-radius: 10px; 
+        margin-bottom: 30px; 
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05); } 
+      .profile-card h3 { 
+        margin-top: 0; color: #2d3436; } 
+      .profile-card p { 
+        margin: 6px 0; 
+        font-size: 0.95rem;
+         color: #2c3e50; } 
+      .subject-block {
+         background: white;
+          padding: 20px; border-radius: 12px; 
+          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); 
+          margin-bottom: 30px; }
+       .subject-title { 
+        font-size: 1.1rem; 
+        font-weight: bold; 
+        margin-bottom: 10px; color: #2d3436; }
+        .quiz-row { 
+          display: flex;
+           justify-content: space-between;
+            padding: 10px; background: #ecf0f1;
+             border-radius: 8px; margin-bottom: 10px; }
+         .quiz-title { 
+          font-weight: 500; 
+          color: #2c3e50; } 
+         .start-btn {
+           background: #00b894; 
+           color: white; padding: 8px 14px;
+            border: none; border-radius: 6px; 
+            text-decoration: none; 
+            font-weight: bold; 
+            transition: background 0.3s ease; }
+          .start-btn:hover {
+             background: #019875; }
+          /* Progress bar styles */
+.progress-bar-container {
+  background: #dcdde1;
+  border-radius: 10px;
+  height: 18px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+.progress-bar {
+  background: #00b894;
+  color: white;
+  height: 100%;
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: bold;
+  line-height: 18px;
+  transition: width 0.4s ease;
+}
+</style>
+ </head> 
+ <body>
+   <div class="sidebar"> 
+    <h2>🎓 Quiz Portal</h2>
+     <a href="{% url 'user_dashboard' %}" class="nav-link">🏠 Dashboard</a> 
+     <a href="{% url 'user_history' %}" class="nav-link">📜 My History</a> 
+     <a href="{% url 'user_performance_graph' %}" class="nav-link">📊 Performance</a> 
+     <a href="{% url 'user_notifications' %}" class="nav-link">🔔 Notifications</a> 
+     <a href="{% url 'leaderboard' %}" class="nav-link">🏆 Leaderboard</a>
+     <a href="{% url 'bookmarked_questions' %}" class="nav-link">📌 Bookmarked</a>
+     <a href="{% url 'logout' %}" class="nav-link">🚪 Logout</a> </div>
+      <div class="main">
+         <!-- ✅ Profile Section --> 
+          <div class="profile-card"> 
+            <h3>👤 Profile</h3> 
+            <p><strong>Name:</strong> {{ request.user.username }}</p> 
+            <p><strong>Email:</strong> {{ request.user.email }}</p> 
+            <p><strong>Total Attempts:</strong> {{ total_attempts }}</p> 
+            <p><strong>Average Score:</strong> {{ avg_score }}</p> </div>
+             <h1>🧠 Available Quizzes</h1>
+{% for item in subject_progress %}
+<div class="subject-block">
+<div class="subject-title">
+{{ item.subject.name }} – {{ item.attempted }}/{{ item.total }} quizzes attempted
+</div>
+  <div class="progress-bar-container">
+    <div class="progress-bar" style="width: {{ item.percent }}%;">
+      {{ item.percent }}%
+    </div>
+  </div>
+
+  {% if item.quizzes %}
+    {% for quiz in item.quizzes %}
+      <div class="quiz-row">
+        <div class="quiz-title">{{ quiz.title }}</div>
+        <a href="{% url 'start_quiz' quiz.id %}" class="start-btn">Start Quiz</a>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p style="color: gray;">No quizzes available for this subject.</p>
+  {% endif %}
+</div>
+{% endfor %}
+
+</div> 
+</body>
+ </html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+ <html>
+   <head> 
+    <title>{{ quiz.title }} - Question {{ index }} of {{ total }}</title> 
+    <style>
+     body { background: #f5f6fa; font-family: 'Segoe UI', sans-serif; padding: 50px; }
+   .container { max-width: 600px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.05); } 
+   h2 { margin-bottom: 15px; color: #2d3436; }
+    form { margin-top: 20px; } 
+    label { display: block; margin-bottom: 10px; background: #ecf0f1; padding: 10px; border-radius: 8px; cursor: pointer; } 
+    button { margin-top: 20px; background: #00b894; color: white; padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; }
+     button:hover { background: #019875; } 
+     </style> 
+     </head> 
+     <body>
+       <div class="container"> <h2>Question {{ index }} of {{ total }}</h2> 
+        <p><strong>{{ question.text }}</strong></p> 
+        <form method="POST"> {% csrf_token %} <label>
+          <input type="radio" name="answer" value="{{ question.option1 }}" required> {{ question.option1 }}</label>
+           <label><input type="radio" name="answer" value="{{ question.option2 }}"> {{ question.option2 }}</label>
+            <label><input type="radio" name="answer" value="{{ question.option3 }}"> {{ question.option3 }}</label> 
+            <label><input type="radio" name="answer" value="{{ question.option4 }}"> {{ question.option4 }}</label>
+            <button type="submit">Next</button>
+<button type="submit" name="bookmark" value="true" style="margin-left: 10px;">🔖 Bookmark</button>
+</form> 
+</div> 
+</body>
+ </html>

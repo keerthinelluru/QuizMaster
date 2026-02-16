@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Send Notification</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f7f9fc;
+      padding: 40px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #2c3e50;
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    input[type="text"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    button {
+      background-color: #00b894;
+      color: white;
+      padding: 12px;
+      width: 100%;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #019875;
+    }
+     .back-link { 
+      display: inline-block; 
+      margin-top: 30px; 
+      color: #3498db; 
+      text-decoration: none;
+       font-weight: bold; 
+       font-size: 16px; 
+      } 
+      .back-link:hover { text-decoration: underline; color: #2980b9; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    {% if messages %}
+
+<ul style="color: green; font-weight: bold;"> {% for message in messages %} <li>{{ message }}</li> {% endfor %} </ul> {% endif %}
+    <h2>📣 Send Notification</h2>
+
+    
+    <form method="POST">
+      {% csrf_token %}
+      <label>Select Subject:</label>
+      <select name="subject" required>
+        <option value="">-- Select --</option>
+        {% for subject in subjects %}
+          <option value="{{ subject.id }}">{{ subject.name }}</option>
+        {% endfor %}
+      </select>
+
+      <label>Notification Title:</label>
+      <input type="text" name="title" required>
+
+      <label>Message:</label>
+      <textarea name="message" rows="4" required></textarea>
+
+      <label>Optional Link (e.g. Google Doc, PDF, etc):</label>
+      <input type="text" name="link">
+
+      <button type="submit">Send Notification</button>
+    </form>
+    <a href="{% url 'admin_dashboard' %}" class="back-link">← Back to Admin Dashboard</a>
+  </div>
+</body>
+</html>

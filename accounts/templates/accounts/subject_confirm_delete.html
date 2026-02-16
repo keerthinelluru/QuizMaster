@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Delete Subject</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #ffecd2, #fcb69f);
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .confirm-container {
+      background: white;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+      transition: transform 0.3s ease;
+    }
+
+    .confirm-container:hover {
+      transform: scale(1.02);
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      color: #2c3e50;
+      margin-bottom: 30px;
+    }
+
+    form {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    button {
+      background-color: #e74c3c;
+      border: none;
+      padding: 10px 20px;
+      color: white;
+      font-weight: 600;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+      background-color: #c0392b;
+      transform: translateY(-2px);
+    }
+
+    .cancel-link {
+      background-color: #bdc3c7;
+      color: #2c3e50;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-block;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .cancel-link:hover {
+      background-color: #95a5a6;
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="confirm-container">
+    <h2>Are you sure you want to delete<br><strong>"{{ subject.name }}"</strong>?</h2>
+
+    <form method="POST">
+      {% csrf_token %}
+      <button type="submit">Yes, Delete</button>
+      <a href="{% url 'subject_list' %}" class="cancel-link">Cancel</a>
+    </form>
+  </div>
+
+</body>
+</html>
